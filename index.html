@@ -4,52 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ARK4 — Structural Trading Sanctuary</title>
-  /* SPLASH SCREEN STYLES */
-#splash-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--bg-color, #08080a);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999; /* Keeps it on top of everything */
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.splash-text-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.center-text {
-  font-size: 3rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.fade-text {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #3b82f6; /* Accent blue color */
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0; /* Hidden initially */
-  /* Starts at 1s, runs for 3s, stays visible */
-  animation: fadeTextIn 3s ease-in-out 1s forwards; 
-}
-
-/* The Fade-in Animation */
-@keyframes fadeTextIn {
-  0% { opacity: 0; transform: translateY(10px); filter: blur(4px); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
+  
   <style>
+    /* SPLASH SCREEN STYLES */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--bg-color, #08080a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999; /* Keeps it on top of everything */
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .splash-text-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .center-text {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .fade-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #3b82f6; /* Accent blue color */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0; /* Hidden initially */
+      /* Starts at 1s, runs for 3s, stays visible */
+      animation: fadeTextIn 3s ease-in-out 1s forwards; 
+    }
+
+    /* The Fade-in Animation */
+    @keyframes fadeTextIn {
+      0% { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+
     /* RESET & CORE VARIABLES */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -69,14 +71,7 @@
       width: 100vw;
       height: 100vh;
     }
-<!-- 4-SECOND SPLASH SCREEN -->
-<div id="splash-screen">
-  <div class="splash-text-container">
-    <span class="fade-text left-text">find your</span>
-    <span class="center-text">arc 4</span>
-    <span class="fade-text right-text">your success</span>
-  </div>
-</div>
+
     /* TOP HEADER BRANDING */
     header {
       position: fixed;
@@ -309,6 +304,15 @@
 </head>
 <body>
 
+  <!-- 4-SECOND SPLASH SCREEN -->
+  <div id="splash-screen">
+    <div class="splash-text-container">
+      <span class="fade-text left-text">find your</span>
+      <span class="center-text">arc 4</span>
+      <span class="fade-text right-text">your success</span>
+    </div>
+  </div>
+
   <!-- TOP HEADER -->
   <header>
     <div class="brand-logo">ARK<span>4</span></div>
@@ -420,23 +424,24 @@
     <a href="#panel-3" class="nav-pill">03 ACC</a>
     <a href="#panel-4" class="nav-pill">04 VIL</a>
   </nav>
-<!-- SPLASH SCREEN REMOVAL SCRIPT -->
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const splashScreen = document.getElementById('splash-screen');
-    
-    // Wait exactly 4 seconds (4000 milliseconds)
-    setTimeout(() => {
-      // Trigger the CSS transition to fade out
-      splashScreen.style.opacity = '0';
-      splashScreen.style.visibility = 'hidden';
+
+  <!-- SPLASH SCREEN REMOVAL SCRIPT -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const splashScreen = document.getElementById('splash-screen');
       
-      // Remove it from the DOM completely after the fade completes
+      // Wait exactly 4 seconds (4000 milliseconds)
       setTimeout(() => {
-        splashScreen.remove();
-      }, 500);
-    }, 4000);
-  });
-</script>
+        // Trigger the CSS transition to fade out
+        splashScreen.style.opacity = '0';
+        splashScreen.style.visibility = 'hidden';
+        
+        // Remove it from the DOM completely after the fade completes
+        setTimeout(() => {
+          if(splashScreen) splashScreen.remove();
+        }, 500);
+      }, 4000);
+    });
+  </script>
 </body>
 </html>
