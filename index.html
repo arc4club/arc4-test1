@@ -41,6 +41,7 @@
   --green:#00e28a;          /* neon green — profits, donate */
   --red:#ff3d5e;            /* neon red — youtube */
   --purple:#b98bff;         /* neon purple — instagram */
+  --amber:#ffb800;          /* neon amber — warnings, diagnostics */
   --text-main:#ffffff;
   --text-muted:rgba(255,255,255,.56);
 }
@@ -134,6 +135,65 @@ header{
 
 .tip-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-top:.5rem;}
 .tip-list li{border-left:2px solid var(--accent-color);padding-left:.85rem;font-size:.92rem;color:var(--text-main);line-height:1.5;}
+
+/* ============================================================
+   CALLOUTS / RESOURCE LINKS / QUOTES — Trading content
+   ============================================================ */
+.callout{border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.5rem;border:1px solid;}
+.callout-warning{background:rgba(255,184,0,.08);border-color:rgba(255,184,0,.35);}
+.callout-title{font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.4rem;font-family:'IBM Plex Mono',monospace;}
+.callout-warning .callout-title{color:var(--amber);}
+.callout p{color:var(--text-muted);font-size:.88rem;line-height:1.65;}
+.callout p strong{color:#fff;}
+
+.pillars-row{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.75rem;}
+.pillar-chip{
+  flex:1 1 140px;background:var(--surface);border:1px solid var(--border-color);border-radius:10px;
+  padding:.9rem 1rem;text-align:center;
+}
+.pillar-chip .num{font-family:'IBM Plex Mono',monospace;color:var(--accent-color);font-size:.75rem;letter-spacing:1px;}
+.pillar-chip .label{font-weight:600;color:#fff;font-size:.9rem;margin-top:.25rem;}
+
+.resource-list{display:flex;flex-direction:column;gap:.55rem;margin:.75rem 0 1.5rem;}
+.resource-item{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:var(--surface);border:1px solid var(--border-color);border-radius:8px;
+  padding:.7rem 1rem;text-decoration:none;color:var(--text-main);font-size:.87rem;
+  transition:border-color .2s,transform .15s;
+}
+.resource-item:hover{border-color:var(--accent-color);transform:translateX(2px);}
+.resource-item .res-meta{color:var(--text-muted);font-size:.72rem;font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+.resource-item .res-arrow{color:var(--accent-color);font-family:'IBM Plex Mono',monospace;flex-shrink:0;}
+
+.quote-block{
+  border-left:3px solid var(--purple);padding:1rem 1.2rem;background:var(--surface);
+  border-radius:0 10px 10px 0;margin:1rem 0 1.5rem;font-size:.87rem;color:var(--text-muted);
+  line-height:1.75;font-style:italic;
+}
+
+.checklist-group{margin-bottom:1.6rem;}
+.checklist-group h4{
+  font-size:.95rem;font-weight:600;margin-bottom:.65rem;color:#fff;
+  display:flex;align-items:center;gap:.5rem;
+}
+.checklist-group h4 .tag{
+  font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:1px;text-transform:uppercase;
+  padding:.15rem .5rem;border-radius:5px;
+}
+.tag.blue{color:var(--accent-color);background:rgba(0,184,255,.12);}
+.tag.red{color:var(--red);background:rgba(255,61,94,.12);}
+.tag.green{color:var(--green);background:rgba(0,226,138,.12);}
+.tag.purple{color:var(--purple);background:rgba(185,139,255,.12);}
+.tag.amber{color:var(--amber);background:rgba(255,184,0,.12);}
+
+.check-list{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+.check-list li{font-size:.88rem;line-height:1.55;color:var(--text-main);padding-left:.85rem;border-left:2px solid var(--border-color);}
+.check-list.accent-blue li{border-left-color:var(--accent-color);}
+.check-list.accent-red li{border-left-color:var(--red);}
+.check-list.accent-green li{border-left-color:var(--green);}
+.check-list.accent-purple li{border-left-color:var(--purple);}
+.check-list.accent-amber li{border-left-color:var(--amber);}
+.check-list li strong{color:#fff;}
 
 /* ============================================================
    PROP FIRMS
@@ -237,10 +297,10 @@ header{
 
       <div class="subnav" id="trading-subnav">
         <button class="subnav-btn active" data-sub="introduction">Introduction</button>
-        <button class="subnav-btn" data-sub="strategies">Strategies</button>
-        <button class="subnav-btn" data-sub="risk">Risk Management</button>
-        <button class="subnav-btn" data-sub="tips">Tips &amp; Tricks</button>
-        <button class="subnav-btn" data-sub="mindset">Mindset</button>
+        <button class="subnav-btn" data-sub="tools">Tools &amp; Setup</button>
+        <button class="subnav-btn" data-sub="technical">Technical Analysis</button>
+        <button class="subnav-btn" data-sub="risk">Risk &amp; Trade Journal</button>
+        <button class="subnav-btn" data-sub="mindset">Mindset &amp; Psychology</button>
       </div>
 
       <!-- Introduction -->
@@ -248,40 +308,234 @@ header{
         <div class="video-container">
           <iframe src="https://www.youtube-nocookie.com/embed/fJ9rUzIMcZQ?controls=1" title="ARC4 Intro Video" allowfullscreen></iframe>
         </div>
-        <p class="copy">Markets are designed to wipe out the undisciplined. <strong>ARC4</strong> is a structured, 4-pillar system built to strip out emotion and replace it with repeatable execution. Replace this paragraph with your own introduction — who you are, what ARC4 stands for, and what a new member should expect.</p>
+        <p class="copy">Trading requires just three things: <strong>capital, risk management, and psychology</strong>. Everything in this section is built around that order — because no amount of technical skill fixes a broken risk plan or an undisciplined mind.</p>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">⚠ Before you touch real money</div>
+          <p>If you're new to trading, <strong>always start with a demo/simulated account</strong> before moving to a real one. Don't experiment with your hard-earned cash.</p>
+        </div>
+
+        <div class="pillars-row">
+          <div class="pillar-chip"><div class="num">01</div><div class="label">Capital</div></div>
+          <div class="pillar-chip"><div class="num">02</div><div class="label">Risk Management</div></div>
+          <div class="pillar-chip"><div class="num">03</div><div class="label">Psychology</div></div>
+        </div>
+
+        <p class="copy">Psychology and risk management make up roughly <strong>90% of trading</strong>. The remaining 10% is the technical side — knowing what buttons to click, reading trends, and basic mechanics. Use the tabs above to work through tools, technical analysis, your trade journal, and mindset — in that order if you're just starting out.</p>
       </div>
 
-      <!-- Strategies -->
-      <div class="sub-panel" data-sub-panel="strategies">
-        <p class="copy">Write about the core strategies you teach here — setups, timeframes, and the market structure logic behind each one.</p>
-        <div class="copy-heading">Setup 1 — Name it here</div>
-        <p class="copy">Describe the setup, the conditions that need to align, and an example.</p>
-        <div class="copy-heading">Setup 2 — Name it here</div>
-        <p class="copy">Describe the second setup and when it applies.</p>
+      <!-- Tools & Setup -->
+      <div class="sub-panel" data-sub-panel="tools">
+        <div class="copy-heading">Charting &amp; Tools</div>
+        <p class="copy">For viewing charts and analyzing price action, <strong>TradingView</strong> is the best tool in the market right now. Download the app, watchlist the instruments you want to trade, and get familiar with the interface.</p>
+        <p class="copy">Tip: you don't need the premium version unless you're doing algo trading — which is rare for most people.</p>
+        <div class="resource-list">
+          <a href="https://www.tradingview.com/" target="_blank" class="resource-item"><span>TradingView — official site</span><span class="res-arrow">➔</span></a>
+          <a href="https://www.youtube.com/watch?v=4Wdo9QKs9p4" target="_blank" class="resource-item"><span>How To Use TradingView For Beginners (Full Tutorial)<br><span class="res-meta">Craig Percoco</span></span><span class="res-arrow">➔</span></a>
+        </div>
+
+        <div class="copy-heading">The Trading Environment</div>
+        <p class="copy">Coverage here focuses mostly on the <strong>Forex market</strong>, with notes on how to handle it from an Indian banking perspective.</p>
+
+        <div class="checklist-group">
+          <h4><span class="tag blue">Demo / Sim Accounts</span></h4>
+          <ul class="check-list accent-blue">
+            <li>Use <strong>MetaTrader 5 (MT5)</strong> — one of the best platforms right now, and it supports algo trading too.</li>
+            <li>You only need an email and phone number to get set up.</li>
+            <li>Experiment with leverage and other features here first, so you don't mess up real money later.</li>
+          </ul>
+        </div>
+
+        <div class="resource-list">
+          <a href="https://www.youtube.com/watch?v=4Wdo9QKs9p4" target="_blank" class="resource-item"><span>How To Use TradingView For Beginners (Full Tutorial 2025)<br><span class="res-meta">Craig Percoco</span></span><span class="res-arrow">➔</span></a>
+        </div>
+
+        <div class="checklist-group">
+          <h4><span class="tag green">Real Accounts</span></h4>
+          <ul class="check-list accent-green">
+            <li><strong>Forex:</strong> Exness / OctaFX</li>
+            <li><strong>Crypto:</strong> Binance or Hyperliquid — note: crypto accounts require identity verification (ID paperwork).</li>
+            <li><strong>Indian Markets:</strong> Zerodha</li>
+          </ul>
+        </div>
+
+        <div class="resource-list">
+          <a href="https://www.youtube.com/watch?v=Xb4KWuHmHBQ&list=PLK3V_1jIohqIXBEG7urkZHYmAeetK7Hjv" target="_blank" class="resource-item"><span>Forex Trading For Beginners (Full Course)<br><span class="res-meta">The Trading Channel</span></span><span class="res-arrow">➔</span></a>
+        </div>
       </div>
 
-      <!-- Risk Management -->
+      <!-- Technical Analysis -->
+      <div class="sub-panel" data-sub-panel="technical">
+        <p class="copy">Though psychology is king, you still need some technical analysis to be right often enough. Take your own pace with this — Rome wasn't built in a day.</p>
+        <div class="resource-list">
+          <a href="https://www.youtube.com/watch?v=Xb4KWuHmHBQ&list=PLK3V_1jIohqIXBEG7urkZHYmAeetK7Hjv" target="_blank" class="resource-item"><span>Technical Analysis playlist</span><span class="res-arrow">➔</span></a>
+        </div>
+
+        <div class="copy-heading">Order Flow</div>
+        <p class="copy">If you already have experience with order flow, watch the summarized video below. If you're completely new, work through the in-depth section top to bottom.</p>
+
+        <div class="checklist-group">
+          <h4><span class="tag blue">Summarized Learning</span></h4>
+          <div class="resource-list">
+            <a href="https://youtu.be/BdQlFYSWl0I?si=DW64aRC7D4k7sDQK" target="_blank" class="resource-item"><span>Order flow — summarized overview</span><span class="res-arrow">➔</span></a>
+          </div>
+        </div>
+
+        <div class="checklist-group">
+          <h4><span class="tag purple">In-Depth — Generalized Economic Concepts</span></h4>
+          <div class="resource-list">
+            <a href="https://www.youtube.com/watch?v=PNtKXWNKGN8" target="_blank" class="resource-item"><span>Generalized economic concepts, part 1</span><span class="res-arrow">➔</span></a>
+            <a href="https://youtu.be/oWheof70O9g?si=qPBcZzBdX-93Wi2y" target="_blank" class="resource-item"><span>Generalized economic concepts, part 2</span><span class="res-arrow">➔</span></a>
+          </div>
+        </div>
+
+        <div class="checklist-group">
+          <h4><span class="tag purple">Theories, Math &amp; Tools</span></h4>
+          <p class="copy">From this playlist, only watch videos 3, 5, 6, 7, and 8.</p>
+          <div class="resource-list">
+            <a href="https://youtube.com/playlist?list=PLhEp5RKiwPC3uc88-QJiHoDCFckHPrlh_&si=qhZhINi8q-dgNEK0" target="_blank" class="resource-item"><span>Theories, math &amp; tools/approach playlist</span><span class="res-arrow">➔</span></a>
+            <a href="https://www.youtube.com/watch?v=CkAPhWcieFI&t=44s" target="_blank" class="resource-item"><span>Supporting video</span><span class="res-arrow">➔</span></a>
+          </div>
+        </div>
+
+        <div class="checklist-group">
+          <h4><span class="tag amber">Data</span></h4>
+          <div class="resource-list">
+            <a href="https://www.youtube.com/watch?v=HDbl3qm7h3M&t=314s" target="_blank" class="resource-item"><span>Reading order flow data</span><span class="res-arrow">➔</span></a>
+          </div>
+        </div>
+
+        <div class="checklist-group">
+          <h4><span class="tag green">Tying It All Together</span></h4>
+          <div class="resource-list">
+            <a href="https://www.youtube.com/watch?v=CwHlqEBsjZY" target="_blank" class="resource-item"><span>Tying it together, part 1</span><span class="res-arrow">➔</span></a>
+            <a href="https://www.youtube.com/watch?v=Ic7NL4QCDKg" target="_blank" class="resource-item"><span>Tying it together, part 2</span><span class="res-arrow">➔</span></a>
+            <a href="https://www.youtube.com/watch?v=cLgdXZnLL_0" target="_blank" class="resource-item"><span>Tying it together, part 3</span><span class="res-arrow">➔</span></a>
+            <a href="https://www.youtube.com/watch?v=0jM5Y31YJak&t=145s" target="_blank" class="resource-item"><span>Tying it together, part 4</span><span class="res-arrow">➔</span></a>
+          </div>
+        </div>
+
+        <div class="checklist-group">
+          <h4><span class="tag blue">Further Viewing</span></h4>
+          <div class="resource-list">
+            <a href="#" class="resource-item"><span>Beginners Guide To Start Day Trading In 2026<br><span class="res-meta">Elder Santis</span></span><span class="res-arrow">➔</span></a>
+            <a href="#" class="resource-item"><span>Simulating Supply and Demand<br><span class="res-meta">Primer</span></span><span class="res-arrow">➔</span></a>
+            <a href="#" class="resource-item"><span>I Made a Market Simulation to See if Patterns Are Real<br><span class="res-meta">Krafer</span></span><span class="res-arrow">➔</span></a>
+            <a href="#" class="resource-item"><span>Ultimate Guide To Profiting From Footprint Charts<br><span class="res-meta">Jumpstart Trading</span></span><span class="res-arrow">➔</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Risk & Trade Journal -->
       <div class="sub-panel" data-sub-panel="risk">
-        <p class="copy">Explain your position sizing rules, max daily/weekly loss limits, and how you protect capital.</p>
+        <p class="copy">Trading is entirely about how you manage your risk and psychology — no amount of analysis or technique will help you in the long run. Risk and psychology are deeply correlated: the more emotional you are, the poorer the decisions you're bound to make.</p>
+
+        <div class="copy-heading">Before the Trade</div>
+        <div class="checklist-group">
+          <h4><span class="tag blue">Say to yourself</span></h4>
+          <ul class="check-list accent-blue">
+            <li>I don't know what will happen next.</li>
+            <li>The outcome of the trade is not tied to my self-worth.</li>
+            <li>Just follow it. Timing a pullback is still trying to reverse. Follow.</li>
+            <li><strong>This trade is not important.</strong></li>
+            <li>I don't have to give a reason to myself — or to a viewer — for why I'm taking a trade.</li>
+            <li>Don't get in when it has already made the move; you gotta do it before. It's okay to guess, it's okay to not know what you're doing — just do it.</li>
+          </ul>
+        </div>
+        <div class="checklist-group">
+          <h4><span class="tag red">Do not</span></h4>
+          <ul class="check-list accent-red">
+            <li>Try to reverse, including timing pullbacks at their farthest point.</li>
+            <li>Get in on a big move — most of them don't continue.</li>
+            <li>Overanalyze.</li>
+          </ul>
+        </div>
+        <div class="checklist-group">
+          <h4><span class="tag purple">Remember</span></h4>
+          <ul class="check-list accent-purple">
+            <li><strong>Every trade exists independently.</strong></li>
+            <li>It's just a bunch of rectangles. Chill out.</li>
+            <li>Old fears about trading resembling a past gambling problem don't have to repeat — that's a choice, not a certainty.</li>
+          </ul>
+        </div>
+
+        <div class="copy-heading">During the Trade</div>
         <ul class="tip-list">
-          <li>Rule 1 — e.g. risk no more than 1% per trade</li>
-          <li>Rule 2 — e.g. stop trading after 2 consecutive losses</li>
-          <li>Rule 3 — e.g. always set a stop loss before entry</li>
+          <li>It's okay to see a big profit turn into a little profit — that's how you eventually get the big wins too.</li>
+          <li>Be cautious chasing profit near a high-of-day or low-of-day — big reversals often happen fast right at, barely below, or barely above those levels.</li>
+          <li>If you can't handle the pressure of watching a trade, don't watch it. Do something else.</li>
+          <li>Don't chase your stop loss.</li>
         </ul>
+
+        <div class="copy-heading">After the Trade</div>
+        <p class="copy">Classify every trade into one of three types:</p>
+        <div class="checklist-group">
+          <h4><span class="tag amber">Good trade that didn't work</span></h4>
+          <ul class="check-list accent-amber">
+            <li>That's all you can do. Process over profits. Don't feel bad for yourself — it's part of the game.</li>
+          </ul>
+        </div>
+        <div class="checklist-group">
+          <h4><span class="tag green">Good trade that worked</span></h4>
+          <ul class="check-list accent-green">
+            <li>Don't falsely attribute the reasons it worked. You can't always know for certain why a trade worked — stay level-headed and remove the emotional association from the money.</li>
+          </ul>
+        </div>
+        <div class="checklist-group">
+          <h4><span class="tag red">Bad — didn't follow the rules to enter</span></h4>
+          <ul class="check-list accent-red">
+            <li>Update your trading notes to prevent it from happening again. Process over profits.</li>
+          </ul>
+        </div>
+
+        <div class="copy-heading">Survival Rules</div>
+        <ul class="tip-list">
+          <li><strong>Survive the curve:</strong> practice, study, size down your capital, take fewer trades, and focus on surviving the initial learning phase.</li>
+          <li><strong>Accept losses:</strong> expect them and handle them like an adult. There's no strategy that avoids every red day — the trick is not blowing up your account when it happens.</li>
+          <li><strong>Execute the edge:</strong> develop a clear edge, believe in it, and execute it mechanically every time you see it. Set strict risk parameters and let the trade play out to your stop loss or take-profit.</li>
+          <li><strong>Control the vices:</strong> don't be impatient or greedy. Never trade out of boredom, and don't force your ideas onto a chart hoping the market agrees with you.</li>
+          <li><strong>Be realistic:</strong> you don't need to understand every candle or catch every move. Take what the market gives you, protect your capital, and try again the next day.</li>
+        </ul>
+
+        <div class="quote-block">
+          "Keep your head high, King. The money doesn't matter as long as you lose less than your monthly limit. Take lots of trades, because you don't really learn anything from just watching — your brain filters out the 'pretend' trades and skews them in your favor. Just press the buy button."
+        </div>
       </div>
 
-      <!-- Tips & Tricks -->
-      <div class="sub-panel" data-sub-panel="tips">
-        <ul class="tip-list">
-          <li>Tip 1 — add a practical, quick-win tip here</li>
-          <li>Tip 2 — add another actionable tip</li>
-          <li>Tip 3 — add another actionable tip</li>
-        </ul>
-      </div>
-
-      <!-- Mindset -->
+      <!-- Mindset & Psychology -->
       <div class="sub-panel" data-sub-panel="mindset">
-        <p class="copy">Write about the psychology of trading — discipline, patience, and how to handle losing streaks without breaking your system.</p>
+        <div class="callout callout-warning">
+          <div class="callout-title">⚠ The 90/10 split</div>
+          <p>Psychology and risk management make up <strong>90%</strong> of trading. The remaining <strong>10%</strong> is the technical side — knowing what buttons to click, identifying trends, and basic mechanics.</p>
+        </div>
+
+        <div class="copy-heading">The Reality of the Learning Curve</div>
+        <ul class="tip-list">
+          <li><strong>The technicals:</strong> roughly 2–3 hours of daily study to learn the technical side of charts.</li>
+          <li><strong>The psychology:</strong> controlling your emotions takes years. You can never fully eliminate emotional responses — the goal is reducing the negative effects of bad decisions.</li>
+          <li><strong>The progress:</strong> you might revenge trade daily at first. After 2–3 years of discipline, the urge still shows up, but you might only give in once every 2–3 months. Progress is about frequency and control, not perfection.</li>
+        </ul>
+
+        <div class="copy-heading">The Evolutionary Mismatch</div>
+        <p class="copy">Your brain evolved for survival, not for generating trading profits. Every instinct that kept your ancestors alive in the wild will actively work against your account. Before your trading day, run through these diagnostic questions:</p>
+        <ul class="check-list accent-amber">
+          <li>Do you increase your position size immediately after a win?</li>
+          <li>Do you hold onto losing trades longer than you hold your winners?</li>
+          <li>Do you make impulsive revenge trades right after a loss?</li>
+          <li>Do you check your open positions obsessively every few minutes?</li>
+          <li>Do you blame your losses on market "manipulation" instead of your own execution?</li>
+        </ul>
+
+        <div class="copy-heading">Example: Real Trade Reflection</div>
+        <div class="quote-block">
+          "You are successfully identifying the thought processes that made you trade so poorly the first day. When it's green with momentum you want to get in, but that's when it reverses. It's a balance between trading the opposite of what you think, and getting into a trade at the right time."
+        </div>
+
+        <div class="copy-heading">Top Recommendations to Master Your Mindset</div>
+        <div class="resource-list">
+          <a href="#" class="resource-item"><span>Book — <strong>The Best Loser Wins</strong><br><span class="res-meta">Tom Hougaard</span></span><span class="res-arrow">➔</span></a>
+          <a href="#" class="resource-item"><span>YouTube Channel — <strong>Iman Trading</strong></span><span class="res-arrow">➔</span></a>
+        </div>
       </div>
     </div>
   </section>
