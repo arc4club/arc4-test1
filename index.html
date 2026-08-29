@@ -1,447 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ARK4 — Structural Trading Sanctuary</title>
-  
-  <style>
-    /* SPLASH SCREEN STYLES */
-    #splash-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: var(--bg-color, #08080a);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999; /* Keeps it on top of everything */
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ARC4 — Structural Trading Sanctuary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    .splash-text-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+<style>
+/* ============================================================
+   SPLASH SCREEN
+   ============================================================ */
+#splash-screen{
+  position:fixed;inset:0;background-color:var(--bg-color,#06070a);
+  display:flex;justify-content:center;align-items:center;z-index:9999;
+  transition:opacity .4s ease,visibility .4s ease;
+}
+.splash-text-container{display:flex;align-items:baseline;gap:20px;font-family:'Space Grotesk',sans-serif;}
+.center-text{font-size:3.6rem;font-weight:700;letter-spacing:1px;line-height:1;display:inline-flex;}
+.center-text .arc-part{color:#fff;}
+.center-text .four-part{color:var(--accent-color,#00b8ff);text-shadow:0 0 14px rgba(0,184,255,.6);}
+.fade-text{font-size:.95rem;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:3px;opacity:0;animation:fadeTextIn .9s ease-out .25s forwards;}
+@keyframes fadeTextIn{0%{opacity:0;transform:translateY(8px);filter:blur(3px);}100%{opacity:1;transform:translateY(0);filter:blur(0);}}
+@media (max-width:640px){
+  .splash-text-container{gap:10px;}
+  .center-text{font-size:2.3rem;}
+  .fade-text{font-size:.6rem;letter-spacing:2px;}
+}
 
-    .center-text {
-      font-size: 3rem;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+/* ============================================================
+   RESET & PALETTE
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg-color:#06070a;
+  --surface:#0f1015;
+  --surface-alt:#14161c;
+  --border-color:rgba(255,255,255,.12);
+  --accent-color:#00b8ff;   /* neon blue — headings / primary */
+  --green:#00e28a;          /* neon green — profits, donate */
+  --red:#ff3d5e;            /* neon red — youtube */
+  --purple:#b98bff;         /* neon purple — instagram */
+  --text-main:#ffffff;
+  --text-muted:rgba(255,255,255,.56);
+}
+body{
+  font-family:'Inter',sans-serif;
+  background-color:var(--bg-color);
+  color:var(--text-main);
+  width:100vw;height:100vh;overflow:hidden;
+}
+::selection{background:var(--accent-color);color:#000;}
+h1,h2,h3,.brand-logo,.panel-title,.subnav-btn,.nav-link{font-family:'Space Grotesk',sans-serif;}
+.mono{font-family:'IBM Plex Mono',monospace;}
 
-    .fade-text {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #3b82f6; /* Accent blue color */
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0; /* Hidden initially */
-      /* Starts at 1s, runs for 3s, stays visible */
-      animation: fadeTextIn 3s ease-in-out 1s forwards; 
-    }
+/* ============================================================
+   HEADER
+   ============================================================ */
+header{
+  position:fixed;top:0;left:0;width:100%;height:60px;padding:0 1.75rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(6,7,10,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border-color);z-index:100;
+}
+.brand-logo{font-weight:700;font-size:1.35rem;letter-spacing:1px;color:#fff;}
+.brand-logo span{color:var(--accent-color);text-shadow:0 0 8px rgba(0,184,255,.6);}
+.live-status{font-family:'IBM Plex Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);display:flex;align-items:center;gap:6px;}
+.status-dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:blink 1.6s steps(1) infinite;}
+@keyframes blink{50%{opacity:.25;}}
 
-    /* The Fade-in Animation */
-    @keyframes fadeTextIn {
-      0% { opacity: 0; transform: translateY(10px); filter: blur(4px); }
-      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
-    }
+/* ============================================================
+   MAIN TOP NAVIGATION — full section names
+   ============================================================ */
+.main-nav{
+  position:fixed;top:60px;left:0;width:100%;height:52px;z-index:99;
+  display:flex;align-items:stretch;gap:0;
+  background:rgba(10,11,15,.95);border-bottom:1px solid var(--border-color);
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.main-nav::-webkit-scrollbar{display:none;}
+.nav-link{
+  flex:0 0 auto;display:flex;align-items:center;padding:0 1.5rem;
+  font-size:.85rem;font-weight:600;letter-spacing:.5px;color:var(--text-muted);
+  text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.nav-link:hover{color:#fff;}
+.nav-link.active{color:var(--accent-color);border-bottom-color:var(--accent-color);background:rgba(0,184,255,.06);}
 
-    /* RESET & CORE VARIABLES */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg-color: #08080a;
-      --card-bg: #121217;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --accent-color: #3b82f6;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-    }
+/* ============================================================
+   CONTENT / SECTIONS
+   ============================================================ */
+.content-area{
+  width:100vw;height:100vh;padding-top:112px;
+}
+.page-section{display:none;width:100%;height:100%;overflow-y:auto;}
+.page-section.active{display:block;}
+.page-section::-webkit-scrollbar{width:5px;}
+.page-section::-webkit-scrollbar-thumb{background:var(--border-color);}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      overflow: hidden; /* Prevents global double scrollbars */
-      width: 100vw;
-      height: 100vh;
-    }
+.inner{max-width:920px;margin:0 auto;padding:2.5rem 1.75rem 6rem;}
 
-    /* TOP HEADER BRANDING */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(8, 8, 10, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
-      z-index: 100;
-    }
+.page-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent-color);font-weight:600;}
+.page-title{font-size:2.1rem;font-weight:700;margin-top:.35rem;color:#fff;}
+.page-header{margin-bottom:2rem;padding-bottom:1.1rem;border-bottom:1px solid var(--border-color);}
 
-    .brand-logo {
-      font-weight: 900;
-      font-size: 1.25rem;
-      letter-spacing: 2px;
-      color: #fff;
-    }
-    .brand-logo span { color: var(--accent-color); }
+/* ============================================================
+   TRADING — sub navigation
+   ============================================================ */
+.subnav{
+  display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem;
+}
+.subnav-btn{
+  font-size:.82rem;font-weight:600;letter-spacing:.3px;color:var(--text-muted);
+  background:var(--surface);border:1px solid var(--border-color);
+  padding:.55rem 1rem;border-radius:8px;cursor:pointer;transition:all .2s;
+}
+.subnav-btn:hover{color:#fff;border-color:rgba(255,255,255,.3);}
+.subnav-btn.active{color:#000;background:var(--accent-color);border-color:var(--accent-color);}
 
-    .live-status {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #10b981;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background-color: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #10b981;
-    }
+.sub-panel{display:none;}
+.sub-panel.active{display:block;}
 
-    /* MAIN HORIZONTAL CONTAINER */
-    .ark4-viewport {
-      display: flex;
-      width: 100vw;
-      height: 100vh;
-      padding-top: 60px; /* Offset for top header */
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-    }
+.video-container{
+  width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;
+  overflow:hidden;border:1px solid var(--border-color);margin-bottom:1.25rem;
+}
+.video-container iframe{width:100%;height:100%;border:none;}
 
-    /* INDIVIDUAL PANELS */
-    .panel {
-      flex: 0 0 100vw; /* Default Full Width on Mobile */
-      height: calc(100vh - 60px);
-      scroll-snap-align: start;
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid var(--border-color);
-      position: relative;
-    }
+.copy{color:var(--text-muted);font-size:.96rem;line-height:1.7;margin-bottom:1.1rem;}
+.copy strong{color:#fff;}
+.copy-heading{font-size:1.15rem;font-weight:600;color:#fff;margin:1.4rem 0 .6rem;}
 
-    .panel-header {
-      margin-bottom: 1.5rem;
-    }
-    .panel-tag {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent-color);
-      font-weight: 700;
-    }
-    .panel-title {
-      font-size: 1.75rem;
-      font-weight: 800;
-      margin-top: 4px;
-    }
+.tip-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-top:.5rem;}
+.tip-list li{border-left:2px solid var(--accent-color);padding-left:.85rem;font-size:.92rem;color:var(--text-main);line-height:1.5;}
 
-    /* SECTION 1: PITCH VIDEO */
-    .video-container {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: #000;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border-color);
-      margin-bottom: 1rem;
-    }
-    .video-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .pitch-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
+/* ============================================================
+   PROP FIRMS
+   ============================================================ */
+.firm-logos{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 1.75rem;}
+.firm-chip{
+  border:1px solid var(--border-color);padding:.45rem .9rem;border-radius:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:.75rem;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--text-muted);
+}
+.info-card{
+  background:var(--surface);border:1px solid var(--border-color);border-radius:12px;
+  padding:1.4rem 1.5rem;margin-bottom:1rem;
+}
+.info-card h3{font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:.5rem;}
+.info-card p{color:var(--text-muted);font-size:.92rem;line-height:1.65;}
 
-    /* SECTION 2: VERTICAL SCROLL PROOFS */
-    .proof-scroll-area {
-      overflow-y: auto;
-      height: 100%;
-      padding-right: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    /* Custom Scrollbar for Inner Proof Panel */
-    .proof-scroll-area::-webkit-scrollbar { width: 4px; }
-    .proof-scroll-area::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+/* ============================================================
+   PROOFS
+   ============================================================ */
+.proof-grid{display:flex;flex-direction:column;gap:1rem;}
+.proof-card{
+  background:var(--surface);border:1px solid var(--border-color);
+  border-left:3px solid var(--green);border-radius:10px;padding:1.15rem 1.3rem;
+}
+.proof-card-header{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px;font-family:'IBM Plex Mono',monospace;}
+.proof-card-header .proof-tag{color:var(--accent-color);}
+.proof-amount{font-family:'IBM Plex Mono',monospace;font-size:1.7rem;font-weight:600;color:var(--green);text-shadow:0 0 10px rgba(0,226,138,.35);}
 
-    .proof-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1.25rem;
-    }
-    .proof-card-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-    .proof-amount {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #10b981;
-    }
+/* ============================================================
+   SOCIALS
+   ============================================================ */
+.links-grid{display:flex;flex-direction:column;gap:.9rem;}
+.social-link-card{
+  background:var(--surface);border:1px solid var(--border-color);border-radius:12px;
+  padding:1rem 1.3rem;display:flex;align-items:center;justify-content:space-between;
+  color:var(--text-main);text-decoration:none;font-size:.98rem;font-weight:500;
+  transition:border-color .2s,transform .15s;
+}
+.social-link-card:hover{transform:translateX(3px);}
+.social-link-card .arrow{font-family:'IBM Plex Mono',monospace;}
+.social-link-card.discord{border-color:rgba(0,184,255,.25);}
+.social-link-card.discord .arrow{color:var(--accent-color);}
+.social-link-card.discord:hover{border-color:var(--accent-color);}
+.social-link-card.twitter{border-color:rgba(255,255,255,.2);}
+.social-link-card.twitter .arrow{color:#fff;}
+.social-link-card.twitter:hover{border-color:#fff;}
+.social-link-card.youtube{border-color:rgba(255,61,94,.3);}
+.social-link-card.youtube .arrow{color:var(--red);}
+.social-link-card.youtube:hover{border-color:var(--red);}
+.social-link-card.instagram{border-color:rgba(185,139,255,.3);}
+.social-link-card.instagram .arrow{color:var(--purple);}
+.social-link-card.instagram:hover{border-color:var(--purple);}
+.social-link-card.donate{border-color:rgba(0,226,138,.3);}
+.social-link-card.donate .arrow{color:var(--green);}
+.social-link-card.donate:hover{border-color:var(--green);}
 
-    /* SECTION 3: CHECKOUT PORTAL */
-    .checkout-box {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      height: 100%;
-    }
-    .price-tag {
-      font-size: 2.5rem;
-      font-weight: 900;
-    }
-    .price-tag span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
-    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: var(--text-muted); }
-    .feature-list li { display: flex; align-items: center; gap: 8px; }
-    .feature-list li::before { content: "✓"; color: var(--accent-color); font-weight: bold; }
-    
-    .checkout-btn {
-      margin-top: auto;
-      width: 100%;
-      padding: 1rem;
-      background: var(--accent-color);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
-      transition: opacity 0.2s;
-    }
-    .checkout-btn:hover { opacity: 0.9; }
-
-    /* SECTION 4: SOCIALS & LINKS */
-    .links-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .social-link-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--text-main);
-      text-decoration: none;
-      transition: border-color 0.2s;
-    }
-    .social-link-card:hover { border-color: var(--accent-color); }
-
-    /* FLOATING BOTTOM NAVIGATION PILLS */
-    .nav-pills {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-      background: rgba(18, 18, 23, 0.9);
-      padding: 6px 12px;
-      border-radius: 40px;
-      border: 1px solid var(--border-color);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-    }
-    .nav-pill {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 20px;
-      transition: all 0.2s;
-    }
-    .nav-pill:hover, .nav-pill.active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* DESKTOP RESPONSIVE BREAKPOINT (4 Side-by-Side Horizontal Panels) */
-    @media (min-width: 1024px) {
-      .panel {
-        flex: 0 0 25vw; /* Each section takes exactly 25% screen width */
-      }
-    }
-  </style>
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (min-width:1024px){
+  .page-title{font-size:2.5rem;}
+  .inner{padding-top:3rem;}
+}
+</style>
 </head>
 <body>
 
-  <!-- 4-SECOND SPLASH SCREEN -->
-  <div id="splash-screen">
-    <div class="splash-text-container">
-      <span class="fade-text left-text">find your</span>
-      <span class="center-text">arc 4</span>
-      <span class="fade-text right-text">your success</span>
-    </div>
+<!-- 2-SECOND SPLASH SCREEN -->
+<div id="splash-screen">
+  <div class="splash-text-container">
+    <span class="fade-text left-text">find your</span>
+    <span class="center-text"><span class="arc-part">arc</span><span class="four-part">4</span></span>
+    <span class="fade-text right-text">trading</span>
   </div>
+</div>
 
-  <!-- TOP HEADER -->
-  <header>
-    <div class="brand-logo">ARK<span>4</span></div>
-    <div class="live-status">
-      <div class="status-dot"></div> Systems Operational
+<!-- HEADER -->
+<header>
+  <div class="brand-logo">ARC<span>4</span></div>
+  <div class="live-status"><div class="status-dot"></div> Systems Operational</div>
+</header>
+
+<!-- MAIN TOP NAVIGATION -->
+<nav class="main-nav" id="main-nav">
+  <a href="#trading" class="nav-link" data-page="trading">Trading</a>
+  <a href="#prop-firms" class="nav-link" data-page="prop-firms">Prop Firms</a>
+  <a href="#proofs" class="nav-link" data-page="proofs">Proofs</a>
+  <a href="#socials" class="nav-link" data-page="socials">Socials</a>
+</nav>
+
+<div class="content-area">
+
+  <!-- ============ TRADING ============ -->
+  <section class="page-section" id="trading" data-page="trading">
+    <div class="inner">
+      <div class="page-header">
+        <div class="page-eyebrow">Trading</div>
+        <h1 class="page-title">The Sanctuary</h1>
+      </div>
+
+      <div class="subnav" id="trading-subnav">
+        <button class="subnav-btn active" data-sub="introduction">Introduction</button>
+        <button class="subnav-btn" data-sub="strategies">Strategies</button>
+        <button class="subnav-btn" data-sub="risk">Risk Management</button>
+        <button class="subnav-btn" data-sub="tips">Tips &amp; Tricks</button>
+        <button class="subnav-btn" data-sub="mindset">Mindset</button>
+      </div>
+
+      <!-- Introduction -->
+      <div class="sub-panel active" data-sub-panel="introduction">
+        <div class="video-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/fJ9rUzIMcZQ?controls=1" title="ARC4 Intro Video" allowfullscreen></iframe>
+        </div>
+        <p class="copy">Markets are designed to wipe out the undisciplined. <strong>ARC4</strong> is a structured, 4-pillar system built to strip out emotion and replace it with repeatable execution. Replace this paragraph with your own introduction — who you are, what ARC4 stands for, and what a new member should expect.</p>
+      </div>
+
+      <!-- Strategies -->
+      <div class="sub-panel" data-sub-panel="strategies">
+        <p class="copy">Write about the core strategies you teach here — setups, timeframes, and the market structure logic behind each one.</p>
+        <div class="copy-heading">Setup 1 — Name it here</div>
+        <p class="copy">Describe the setup, the conditions that need to align, and an example.</p>
+        <div class="copy-heading">Setup 2 — Name it here</div>
+        <p class="copy">Describe the second setup and when it applies.</p>
+      </div>
+
+      <!-- Risk Management -->
+      <div class="sub-panel" data-sub-panel="risk">
+        <p class="copy">Explain your position sizing rules, max daily/weekly loss limits, and how you protect capital.</p>
+        <ul class="tip-list">
+          <li>Rule 1 — e.g. risk no more than 1% per trade</li>
+          <li>Rule 2 — e.g. stop trading after 2 consecutive losses</li>
+          <li>Rule 3 — e.g. always set a stop loss before entry</li>
+        </ul>
+      </div>
+
+      <!-- Tips & Tricks -->
+      <div class="sub-panel" data-sub-panel="tips">
+        <ul class="tip-list">
+          <li>Tip 1 — add a practical, quick-win tip here</li>
+          <li>Tip 2 — add another actionable tip</li>
+          <li>Tip 3 — add another actionable tip</li>
+        </ul>
+      </div>
+
+      <!-- Mindset -->
+      <div class="sub-panel" data-sub-panel="mindset">
+        <p class="copy">Write about the psychology of trading — discipline, patience, and how to handle losing streaks without breaking your system.</p>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <!-- MAIN HORIZONTAL VIEWPORT -->
-  <main class="ark4-viewport" id="viewport">
-    
-    <!-- PANEL 01: PITCH & VISION -->
-    <section class="panel" id="panel-1">
-      <div class="panel-header">
-        <div class="panel-tag">01 / VISION</div>
-        <h1 class="panel-title">The Sanctuary</h1>
+  <!-- ============ PROP FIRMS ============ -->
+  <section class="page-section" id="prop-firms" data-page="prop-firms">
+    <div class="inner">
+      <div class="page-header">
+        <div class="page-eyebrow">Prop Firms</div>
+        <h1 class="page-title">Get Funded</h1>
       </div>
-      <div class="video-container">
-        <!-- REPLACE WITH YOUR YOUTUBE/LUMEN EMBED -->
-        <iframe src="https://www.youtube-nocookie.com/embed/fJ9rUzIMcZQ?controls=1" title="ARK4 Intro Video" allowfullscreen></iframe>
-      </div>
-      <p class="pitch-desc">
-        Markets are designed to wipe out the undisciplined. <strong>ARK4</strong> provides a structured, 4-pillar system to eliminate emotion and execute with precision.
-      </p>
-    </section>
 
-    <!-- PANEL 02: VERTICAL SCROLL PROOFS -->
-    <section class="panel" id="panel-2">
-      <div class="panel-header">
-        <div class="panel-tag">02 / PROOF</div>
-        <h2 class="panel-title">Verified Data</h2>
+      <p class="copy">Write an overview of how you approach prop firm challenges — why they're worth pursuing and how ARC4's system applies to passing an evaluation.</p>
+
+      <div class="firm-logos">
+        <span class="firm-chip">FTMO</span>
+        <span class="firm-chip">MyForexFunds</span>
+        <span class="firm-chip">Apex</span>
+        <span class="firm-chip">TopStep</span>
       </div>
-      <div class="proof-scroll-area">
+
+      <div class="info-card">
+        <h3>Evaluation Process</h3>
+        <p>Explain the typical phases of a prop firm evaluation and how you guide members through each stage.</p>
+      </div>
+      <div class="info-card">
+        <h3>Why Prop Firms</h3>
+        <p>Explain the benefit of trading funded accounts versus personal capital.</p>
+      </div>
+      <div class="info-card">
+        <h3>FAQs</h3>
+        <p>Answer common questions members ask before starting a challenge.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROOFS ============ -->
+  <section class="page-section" id="proofs" data-page="proofs">
+    <div class="inner">
+      <div class="page-header">
+        <div class="page-eyebrow">Proofs</div>
+        <h1 class="page-title">Verified Data</h1>
+      </div>
+      <div class="proof-grid">
         <div class="proof-card">
-          <div class="proof-card-header">
-            <span>Prop Firm Payout</span>
-            <span>Aug 2026</span>
-          </div>
+          <div class="proof-card-header"><span class="proof-tag">Prop Firm Payout</span><span>Aug 2026</span></div>
           <div class="proof-amount">+$14,250.00</div>
         </div>
         <div class="proof-card">
-          <div class="proof-card-header">
-            <span>Student Execution</span>
-            <span>Aug 2026</span>
-          </div>
+          <div class="proof-card-header"><span class="proof-tag">Student Execution</span><span>Aug 2026</span></div>
           <div class="proof-amount">+$5,800.00</div>
         </div>
         <div class="proof-card">
-          <div class="proof-card-header">
-            <span>Weekly Target Hit</span>
-            <span>Jul 2026</span>
-          </div>
+          <div class="proof-card-header"><span class="proof-tag">Weekly Target Hit</span><span>Jul 2026</span></div>
           <div class="proof-amount">+$9,120.00</div>
         </div>
         <div class="proof-card">
-          <div class="proof-card-header">
-            <span>Prop Firm Payout</span>
-            <span>Jul 2026</span>
-          </div>
+          <div class="proof-card-header"><span class="proof-tag">Prop Firm Payout</span><span>Jul 2026</span></div>
           <div class="proof-amount">+$21,000.00</div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PANEL 03: PAYMENT PORTAL -->
-    <section class="panel" id="panel-3">
-      <div class="panel-header">
-        <div class="panel-tag">03 / ACCESS</div>
-        <h2 class="panel-title">Mentorship Vault</h2>
-      </div>
-      <div class="checkout-box">
-        <div class="price-tag">$149 <span>/ month</span></div>
-        <ul class="feature-list">
-          <li>Daily Market Structure Breakdown</li>
-          <li>Live Trade Execution Alerts</li>
-          <li>Complete Risk Management System</li>
-          <li>Private Discord Mentorship Access</li>
-        </ul>
-        <!-- REPLACE THIS LINK WITH YOUR WHOP / STRIPE CHECKOUT URL -->
-        <a href="https://whop.com" target="_blank" class="checkout-btn">Join ARK4 Community</a>
-      </div>
-    </section>
-
-    <!-- PANEL 04: COMMUNITY LINKS -->
-    <section class="panel" id="panel-4">
-      <div class="panel-header">
-        <div class="panel-tag">04 / VILLAGE</div>
-        <h2 class="panel-title">Ecosystem</h2>
+  <!-- ============ SOCIALS ============ -->
+  <section class="page-section" id="socials" data-page="socials">
+    <div class="inner">
+      <div class="page-header">
+        <div class="page-eyebrow">Socials</div>
+        <h1 class="page-title">Ecosystem</h1>
       </div>
       <div class="links-grid">
-        <a href="https://discord.gg" target="_blank" class="social-link-card">
-          <span>Discord Server</span> ➔
-        </a>
-        <a href="https://x.com" target="_blank" class="social-link-card">
-          <span>X / Twitter</span> ➔
-        </a>
-        <a href="https://instagram.com" target="_blank" class="social-link-card">
-          <span>Instagram Reels</span> ➔
-        </a>
+        <a href="https://discord.gg" target="_blank" class="social-link-card discord"><span>Discord Server</span><span class="arrow">➔</span></a>
+        <a href="https://x.com" target="_blank" class="social-link-card twitter"><span>X / Twitter</span><span class="arrow">➔</span></a>
+        <a href="https://youtube.com" target="_blank" class="social-link-card youtube"><span>YouTube Channel</span><span class="arrow">➔</span></a>
+        <a href="https://instagram.com" target="_blank" class="social-link-card instagram"><span>Instagram Reels</span><span class="arrow">➔</span></a>
+        <a href="https://buymeacoffee.com" target="_blank" class="social-link-card donate"><span>Support / Donate</span><span class="arrow">➔</span></a>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+</div>
 
-  <!-- FLOATING QUICK NAV PILLS -->
-  <nav class="nav-pills">
-    <a href="#panel-1" class="nav-pill active">01 VIS</a>
-    <a href="#panel-2" class="nav-pill">02 PRF</a>
-    <a href="#panel-3" class="nav-pill">03 ACC</a>
-    <a href="#panel-4" class="nav-pill">04 VIL</a>
-  </nav>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  // Splash screen — 2 seconds
+  const splashScreen = document.getElementById('splash-screen');
+  setTimeout(() => {
+    splashScreen.style.opacity = '0';
+    splashScreen.style.visibility = 'hidden';
+    setTimeout(() => { if (splashScreen) splashScreen.remove(); }, 400);
+  }, 2000);
 
-  <!-- SPLASH SCREEN REMOVAL SCRIPT -->
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const splashScreen = document.getElementById('splash-screen');
-      
-      // Wait exactly 4 seconds (4000 milliseconds)
-      setTimeout(() => {
-        // Trigger the CSS transition to fade out
-        splashScreen.style.opacity = '0';
-        splashScreen.style.visibility = 'hidden';
-        
-        // Remove it from the DOM completely after the fade completes
-        setTimeout(() => {
-          if(splashScreen) splashScreen.remove();
-        }, 500);
-      }, 4000);
+  // Top nav routing
+  const navLinks = document.querySelectorAll('.nav-link');
+  const pages = document.querySelectorAll('.page-section');
+
+  function showPage(pageId) {
+    if (!document.getElementById(pageId)) pageId = 'trading';
+    pages.forEach(p => p.classList.toggle('active', p.id === pageId));
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === pageId));
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pageId = link.dataset.page;
+      history.pushState(null, '', '#' + pageId);
+      showPage(pageId);
+      document.querySelector('.page-section.active').scrollTop = 0;
     });
-  </script>
+  });
+
+  window.addEventListener('popstate', () => {
+    showPage(location.hash.replace('#', '') || 'trading');
+  });
+
+  // Default page on open: Trading (ignore any incoming hash so it always opens on Trading)
+  showPage('trading');
+
+  // Trading sub-navigation
+  const subButtons = document.querySelectorAll('.subnav-btn');
+  const subPanels = document.querySelectorAll('.sub-panel');
+  subButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub = btn.dataset.sub;
+      subButtons.forEach(b => b.classList.toggle('active', b === btn));
+      subPanels.forEach(p => p.classList.toggle('active', p.dataset.subPanel === sub));
+    });
+  });
+});
+</script>
 </body>
 </html>
